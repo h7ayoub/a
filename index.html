@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H7 Gallery - Red Edition Pro</title>
+    <title>H7 Gallery - Premium Edition</title>
     <style>
         :root {
             --bg-gradient: linear-gradient(-45deg, #0a0a0a, #1a0f0f, #0f0f1a, #000000);
@@ -38,7 +38,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            transition: background 0.5s ease;
+            transition: 0.5s ease;
             scroll-behavior: smooth;
         }
 
@@ -48,8 +48,9 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* Progress Bar */
         #progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 4px; z-index: 1001; }
-        #progress-bar { height: 100%; width: 0%; background: var(--primary-red); box-shadow: 0 0 15px var(--primary-red); transition: width 0.2s; }
+        #progress-bar { height: 100%; width: 0%; background: var(--primary-red); box-shadow: 0 0 15px var(--primary-red); }
         
         header { 
             background-color: var(--header-bg);
@@ -68,13 +69,13 @@
         }
 
         .dropdown-menu {
-            display: none; position: absolute; top: 55px; left: 0;
+            display: none; position: absolute; top: 60px; left: 5%;
             background: var(--menu-bg); border: 1px solid var(--border-color);
-            border-radius: 12px; min-width: 170px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden;
+            border-radius: 12px; min-width: 170px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; z-index: 200;
         }
         .dropdown-menu.show { display: block; animation: fadeIn 0.3s ease; }
 
-        .menu-item { padding: 12px 15px; cursor: pointer; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; transition: 0.2s; color: var(--text-color); }
+        .menu-item { padding: 12px 15px; cursor: pointer; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; transition: 0.2s; color: var(--text-color); font-size: 14px; }
         .menu-item:hover { background: var(--primary-red); color: white; }
 
         .social-links { display: flex; gap: 12px; align-items: center; }
@@ -82,61 +83,75 @@
         .social-links a:hover svg { fill: var(--text-color); transform: scale(1.2); }
 
         h1 { 
-            margin-top: 40px; font-size: 2.8rem; font-weight: 800; 
+            margin-top: 40px; font-size: 3rem; font-weight: 800; 
             background: linear-gradient(to right, #fff, var(--primary-red));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
+        /* Filter Bar */
+        .filter-container {
+            margin-top: 20px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; padding: 0 20px;
+        }
+        .filter-btn {
+            background: var(--card-bg); border: 1px solid var(--glass-border); color: var(--text-color);
+            padding: 10px 22px; border-radius: 30px; cursor: pointer; transition: 0.3s; backdrop-filter: blur(5px);
+            font-weight: 600; font-size: 14px;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary-red); color: white; border-color: var(--primary-red);
+            box-shadow: 0 8px 20px var(--accent-glow);
+        }
+
         .gallery { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px; padding: 30px; max-width: 1200px; margin: 0 auto; width: 90%;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px; padding: 40px; max-width: 1300px; margin: 0 auto; width: 90%;
         }
 
         .image-card {
-            background: var(--card-bg); border-radius: 20px; padding: 12px;
+            background: var(--card-bg); border-radius: 24px; padding: 15px;
             border: 1px solid var(--glass-border); transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-            opacity: 0; transform: translateY(40px); backdrop-filter: blur(5px);
+            opacity: 0; transform: translateY(50px); backdrop-filter: blur(8px);
         }
         .image-card.reveal { opacity: 1; transform: translateY(0); }
-        .image-card:hover { border-color: var(--primary-red); transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+        .image-card:hover { border-color: var(--primary-red); transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
         
-        .img-container { width: 100%; height: 260px; overflow: hidden; border-radius: 15px; margin-bottom: 15px; }
-        .image-card img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: 0.6s; }
-        .image-card:hover img { transform: scale(1.08); }
+        .img-container { width: 100%; height: 280px; overflow: hidden; border-radius: 18px; margin-bottom: 15px; }
+        .image-card img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: 0.8s ease; }
+        .image-card:hover img { transform: scale(1.1); }
 
         .download-btn {
             background: linear-gradient(135deg, var(--primary-red), #ff6b81);
-            color: white; padding: 10px 25px; border-radius: 12px; cursor: pointer; 
+            color: white; padding: 12px 28px; border-radius: 14px; cursor: pointer; 
             transition: 0.3s; font-weight: bold; text-decoration: none; display: inline-block;
-            box-shadow: 0 4px 15px var(--accent-glow); border: none;
+            box-shadow: 0 5px 15px var(--accent-glow); border: none; font-size: 14px;
         }
+        .download-btn:hover { transform: scale(1.05); box-shadow: 0 8px 25px var(--primary-red); }
 
         #backToTop {
-            position: fixed; bottom: 25px; right: 25px; width: 45px; height: 45px;
-            background: var(--primary-red); color: white; border: none; border-radius: 12px;
-            cursor: pointer; display: none; z-index: 1000; font-size: 18px;
-        }
-
-        /* تعديلات الجوال */
-        @media (max-width: 600px) {
-            .gallery { gap: 15px; padding: 15px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-            h1 { font-size: 2rem; margin-top: 25px; }
-            .logo { font-size: 24px; }
-            .social-links { gap: 10px; }
-            .social-links svg { width: 22px; height: 22px; }
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
+            background: var(--primary-red); color: white; border: none; border-radius: 15px;
+            cursor: pointer; display: none; z-index: 1000; font-size: 20px; transition: 0.3s;
         }
 
         .modal {
             display: none; position: fixed; z-index: 2000; top: 0; left: 0;
-            width: 100%; height: 100%; background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(10px); justify-content: center; align-items: center;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.96);
+            backdrop-filter: blur(12px); justify-content: center; align-items: center;
         }
-        .modal img { max-width: 92%; max-height: 85%; border-radius: 12px; }
+        .modal img { max-width: 90%; max-height: 85%; border-radius: 15px; border: 1px solid var(--glass-border); }
 
-        footer { padding: 40px 20px; border-top: 1px solid var(--border-color); margin-top: auto; color: #888; font-size: 13px; }
+        @media (max-width: 600px) {
+            .gallery { gap: 25px; padding: 20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+            h1 { font-size: 2.2rem; }
+            .filter-container { gap: 8px; }
+            .filter-btn { padding: 8px 16px; font-size: 12px; }
+        }
+
+        footer { padding: 50px 20px; border-top: 1px solid var(--border-color); margin-top: auto; color: #777; font-size: 14px; letter-spacing: 1px; }
         footer span { color: var(--primary-red); font-weight: bold; }
 
-        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
         ::-webkit-scrollbar-thumb { background: var(--primary-red); border-radius: 10px; }
     </style>
 </head>
@@ -155,65 +170,106 @@
         </div>
         <div class="logo">H<span>7</span></div>
         <div class="social-links">
-            <a href="https://instagram.com/h7_ayoub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-            <a href="https://tiktok.com/@h7_ayoub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.27 1.13 1.18 2.73 1.84 4.31 2.01v3.91c-1.3-.01-2.6-.17-3.83-.59-1.23-.42-2.34-1.12-3.24-2.02v6.41c.01 1.05-.18 2.09-.57 3.07-.39.98-.98 1.86-1.73 2.59-.75.73-1.64 1.29-2.61 1.66s-1.99.55-3.03.55c-1.04 0-2.06-.18-3.03-.55-.97-.37-1.86-.93-2.61-1.66s-1.34-1.61-1.73-2.59c-.39-.98-.58-2.02-.57-3.07s.18-2.09.57-3.07c.39-.98.98-1.86 1.73-2.59.75-.73 1.64-1.29 2.61-1.66.97-.37 1.99-.55 3.03-.55.33 0 .66.02.99.06v3.9c-.33-.03-.66-.04-.99-.04-.52 0-1.03.09-1.52.27-.49.18-.93.46-1.31.83-.38.37-.67.81-.87 1.3-.2.49-.3 1.01-.3 1.53s.1 1.04.3 1.53c.2.49.49.93.87 1.3.38.37.82.65 1.31.83.49.18 1 .27 1.52.27.33 0 .66-.02.99-.06v-7.22z"/></svg></a>
+            <a href="https://instagram.com" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.27 1.13 1.18 2.73 1.84 4.31 2.01v3.91c-1.3-.01-2.6-.17-3.83-.59-1.23-.42-2.34-1.12-3.24-2.02v6.41c.01 1.05-.18 2.09-.57 3.07-.39.98-.98 1.86-1.73 2.59-.75.73-1.64 1.29-2.61 1.66s-1.99.55-3.03.55c-1.04 0-2.06-.18-3.03-.55-.97-.37-1.86-.93-2.61-1.66s-1.34-1.61-1.73-2.59c-.39-.98-.58-2.02-.57-3.07s.18-2.09.57-3.07c.39-.98.98-1.86 1.73-2.59.75-.73 1.64-1.29 2.61-1.66.97-.37 1.99-.55 3.03-.55.33 0 .66.02.99.06v3.9c-.33-.03-.66-.04-.99-.04-.52 0-1.03.09-1.52.27-.49.18-.93.46-1.31.83-.38.37-.67.81-.87 1.3-.2.49-.3 1.01-.3 1.53s.1 1.04.3 1.53c.2.49.49.93.87 1.3.38.37.82.65 1.31.83.49.18 1 .27 1.52.27.33 0 .66-.02.99-.06v-7.22z"/></svg>
+            </a>
         </div>
     </header>
 
-    <h1>Gallery</h1>
-    <div class="gallery" id="gallery"></div>
+    <h1>Explore Gallery</h1>
 
-    <button id="backToTop" onclick="scrollToTop()">↑</button>
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filterImages('all')">All</button>
+        <button class="filter-btn" onclick="filterImages('cars')">Cars</button>
+        <button class="filter-btn" onclick="filterImages('nature')">Nature</button>
+        <button class="filter-btn" onclick="filterImages('cats')">Cats</button>
+        <button class="filter-btn" onclick="filterImages('streets')">Streets</button>
+    </div>
+
+    <div class="gallery" id="gallery"></div>
 
     <div id="myModal" class="modal" onclick="this.style.display='none'">
         <img id="imgFull" src="">
     </div>
 
-    <footer><p>All Rights Reserved &copy; 2026 for <span>H7 Gallery</span></p></footer>
+    <button id="backToTop" onclick="scrollToTop()">↑</button>
+
+    <footer><p>All Rights Reserved &copy; 2026 | Developed by <span>H7 Gallery</span></p></footer>
 
     <script>
         const imagesData = [
-            { id: 1, url: 'IMGP8824.JPG' },
-            { id: 2, url: 'IMGP8821.JPG' },
-            { id: 3, url: 'https://picsum.photos' },
-            { id: 4, url: 'https://picsum.photos' },
-            { id: 5, url: 'https://picsum.photos' },
-            { id: 6, url: 'https://picsum.photos' }
+            // CARS SECTION
+            { id: 1, category: 'cars', url: 'https://images.unsplash.com' },
+            { id: 2, category: 'cars', url: 'https://images.unsplash.com' },
+            { id: 3, category: 'cars', url: '' }, // Add car image URL here
+            
+            // NATURE SECTION
+            { id: 4, category: 'nature', url: 'https://images.unsplash.com' },
+            { id: 5, category: 'nature', url: 'https://images.unsplash.com' },
+            { id: 6, category: 'nature', url: '' }, // Add nature image URL here
+
+            // CATS SECTION
+            { id: 7, category: 'cats', url: 'https://images.unsplash.com' },
+            { id: 8, category: 'cats', url: 'https://images.unsplash.com' },
+            { id: 9, category: 'cats', url: '' }, // Add cat image URL here
+
+            // STREETS SECTION
+            { id: 10, category: 'streets', url: 'https://images.unsplash.com' },
+            { id: 11, category: 'streets', url: 'https://images.unsplash.com' },
+            { id: 12, category: 'streets', url: '' }, // Add street image URL here
+
+            // EXTRA PLACEHOLDERS FOR YOUR NEW IMAGES
+            { id: 13, category: 'cars', url: '' },
+            { id: 14, category: 'nature', url: '' },
+            { id: 15, category: 'cats', url: '' },
+            { id: 16, category: 'streets', url: '' },
+            { id: 17, category: 'cars', url: '' },
+            { id: 18, category: 'streets', url: '' }
         ];
 
         function toggleMenu() { document.getElementById("dropdown").classList.toggle("show"); }
 
-        function display() {
+        function display(filter = 'all') {
             const gallery = document.getElementById('gallery');
-            imagesData.forEach((img, index) => {
+            gallery.innerHTML = '';
+            const filtered = filter === 'all' ? imagesData : imagesData.filter(img => img.category === filter);
+            
+            filtered.forEach((img, index) => {
+                if(img.url === "") return;
                 const card = document.createElement('div');
                 card.className = 'image-card';
-                card.style.transitionDelay = `${index * 0.05}s`; 
+                card.style.transitionDelay = `${index * 0.05}s`;
                 card.innerHTML = `
                     <div class="img-container">
-                        <img src="${img.url}" loading="lazy" onclick="openModal('${img.url}')" alt="Gallery Image">
+                        <img src="${img.url}" loading="lazy" onclick="openModal('${img.url}')" alt="${img.category}">
                     </div>
                     <a href="${img.url}" download class="download-btn">⬇ Download</a>`;
                 gallery.appendChild(card);
             });
-            setTimeout(revealOnScroll, 50);
+            setTimeout(revealOnScroll, 100);
+        }
+
+        function filterImages(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            display(category);
         }
 
         function revealOnScroll() {
-            const cards = document.querySelectorAll('.image-card');
-            cards.forEach(card => {
+            document.querySelectorAll('.image-card').forEach(card => {
                 const cardTop = card.getBoundingClientRect().top;
-                if (cardTop < window.innerHeight - 30) card.classList.add('reveal');
+                if (cardTop < window.innerHeight - 50) card.classList.add('reveal');
             });
         }
-
-        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
         window.onscroll = () => {
             const winScroll = document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             document.getElementById("progress-bar").style.width = (winScroll / height) * 100 + "%";
-            document.getElementById("backToTop").style.display = (winScroll > 300) ? "block" : "none";
+            document.getElementById("backToTop").style.display = winScroll > 300 ? "block" : "none";
             revealOnScroll();
         };
 
@@ -227,6 +283,8 @@
             document.getElementById("imgFull").src = src; 
             document.getElementById("myModal").style.display = "flex"; 
         }
+
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
         window.onclick = (e) => { if (!e.target.matches('.dots-btn')) document.getElementById("dropdown").classList.remove('show'); }
 
