@@ -1,381 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>H7 Gallery</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H7 Gallery</title>
 
-<style>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --text: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --primary: #ff4757;
+            --border: #222;
+        }
 
-:root{
---bg:#0a0a0a;
---text:#ffffff;
---card-bg:rgba(255,255,255,0.04);
---primary:#ff4757;
-}
+        .light-mode {
+            --bg: #f5f5f5;
+            --text: #111;
+            --card-bg: #ffffff;
+            --border: #ddd;
+        }
 
-.light-mode{
---bg:#f5f5f5;
---text:#111;
---card-bg:#ffffff;
-}
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            text-align: center;
+            transition: background 0.4s ease;
+        }
 
-body{
-margin:0;
-font-family:Segoe UI, sans-serif;
-background:var(--bg);
-color:var(--text);
-text-align:center;
-transition:0.4s;
-}
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 5%;
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            z-index: 1000;
+        }
 
-header{
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:15px 30px;
-position:relative;
-}
+        .logo { font-size: 32px; font-weight: 900; letter-spacing: 2px; }
+        .logo span { color: var(--primary); }
 
-.logo{
-position:absolute;
-left:50%;
-transform:translateX(-50%);
-font-size:32px;
-font-weight:900;
-letter-spacing:2px;
-}
+        #themeToggle {
+            background: transparent;
+            border: 1.5px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-.logo span{
-color:#ff4757;
-}
+        .social-links { display: flex; gap: 15px; }
+        .social-links svg { width: 24px; height: 24px; fill: var(--primary); }
 
-#themeToggle{
-background:none;
-border:1px solid #ff4757;
-color:#ff4757;
-padding:6px 12px;
-border-radius:8px;
-cursor:pointer;
-}
+        .filter-container { margin: 20px 0; }
 
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px 22px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 5px;
+        }
 
-.social-links{
-display:flex;
-gap:15px;
-}
+        .filter-btn.active { background: var(--primary); border-color: var(--primary); color: white; }
 
-.social-links svg{
-width:26px;
-height:26px;
-fill:#ff4757;
-cursor:pointer;
-transition:0.3s;
-}
+        .gallery {
+            column-count: 3;
+            column-gap: 20px;
+            padding: 20px 5%;
+            max-width: 1400px;
+            margin: auto;
+            min-height: 400px;
+        }
 
-.social-links svg:hover{
-transform:scale(1.2);
-opacity:0.8;
-}
+        @media (max-width: 900px) { .gallery { column-count: 2; } }
+        @media (max-width: 600px) { .gallery { column-count: 1; } }
 
+        .image-card {
+            break-inside: avoid;
+            margin-bottom: 20px;
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 12px;
+            border: 1px solid var(--border);
+            /* نجعلها مرئية افتراضياً لحل مشكلة الاختفاء */
+            opacity: 1; 
+            transform: translateY(0);
+            transition: 0.4s;
+        }
 
-.filter-container{
-margin-top:20px;
-}
+        .img-container { overflow: hidden; border-radius: 12px; }
+        .image-card img { width: 100%; height: auto; display: block; cursor: zoom-in; }
 
-.filter-btn{
-background:transparent;
-border:1px solid #333;
-color:var(--text);
-padding:10px 20px;
-border-radius:25px;
-cursor:pointer;
-margin:5px;
-}
+        .download-btn {
+            display: block;
+            margin-top: 12px;
+            padding: 10px;
+            background: var(--primary);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+        }
 
-.filter-btn.active{
-background:#ff4757;
-border:none;
-color:white;
-}
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
 
-.gallery{
-column-count:3;
-column-gap:25px;
-padding:40px;
-max-width:1300px;
-margin:auto;
-}
+        .modal img { max-width: 90%; max-height: 85%; border-radius: 8px; }
 
-@media (max-width:900px){
-.gallery{column-count:2;}
-}
-
-@media (max-width:500px){
-.gallery{column-count:1;}
-}
-
-.image-card{
-break-inside:avoid;
-margin-bottom:25px;
-background:var(--card-bg);
-border-radius:20px;
-padding:15px;
-border:1px solid #222;
-opacity:0;
-transform:translateY(40px);
-transition:0.6s;
-}
-
-.image-card.reveal{
-opacity:1;
-transform:translateY(0);
-}
-
-.img-container{
-overflow:hidden;
-border-radius:15px;
-}
-
-.image-card img{
-width:100%;
-display:block;
-cursor:pointer;
-transition:0.5s;
-}
-
-.image-card:hover img{
-transform:scale(1.1);
-}
-
-.download-btn{
-display:inline-block;
-margin-top:10px;
-padding:10px 20px;
-background:#ff4757;
-color:white;
-border-radius:10px;
-text-decoration:none;
-font-size:14px;
-}
-
-.skeleton{
-width:100%;
-height:250px;
-border-radius:15px;
-margin-bottom:25px;
-background:linear-gradient(
-90deg,
-#222 25%,
-#333 50%,
-#222 75%
-);
-background-size:200% 100%;
-animation:skeleton 1.5s infinite;
-}
-
-@keyframes skeleton{
-0%{background-position:200% 0}
-100%{background-position:-200% 0}
-}
-
-
-.modal{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.95);
-justify-content:center;
-align-items:center;
-}
-
-.modal img{
-max-width:90%;
-max-height:90%;
-border-radius:10px;
-}
-
-footer{
-margin-top:40px;
-padding:30px;
-color:#777;
-}
-
-</style>
+        footer { padding: 40px; color: #777; }
+    </style>
 </head>
 
 <body>
 
 <header>
-
-<button id="themeToggle">🌙</button>
-
-<div class="logo">
-H<span>7</span>
-</div>
-
-<div class="social-links">
-
-<a href="https://instagram.com/h7_ayoub" target="_blank">
-
-<svg viewBox="0 0 24 24">
-<path d="M7.75 2C4.57 2 2 4.57 2 7.75v8.5C2 19.43 
-4.57 22 7.75 22h8.5C19.43 22 22 19.43 
-22 16.25v-8.5C22 4.57 19.43 2 
-16.25 2h-8.5zm4.25 4.5a5.5 
-5.5 0 110 11 5.5 5.5 0 
-010-11zm6.5-.75a1.25 1.25 0 
-110 2.5 1.25 1.25 0 
-010-2.5z"/>
-</svg>
-
-</a>
-
-<a href="https://tiktok.com/@h7_ayoub" target="_blank">
-
-<svg viewBox="0 0 24 24">
-<path d="M12 2h3a5 5 0 004 4v3a8 
-8 0 01-4-1.2V15a6 6 0 
-11-6-6c.34 0 .67.03 1 
-.08v3a3 3 0 102 2.92V2z"/>
-</svg>
-
-</a>
-
-</div>
-
+    <button id="themeToggle">🌙</button>
+    <div class="logo">H<span>7</span></div>
+    <div class="social-links">
+        <a href="#" target="_blank"><svg viewBox="0 0 24 24"><path d="M7.75 2C4.57 2 2 4.57 2 7.75v8.5C2 19.43 4.57 22 7.75 22h8.5C19.43 22 22 19.43 22 16.25v-8.5C22 4.57 19.43 2 16.25 2h-8.5zm4.25 4.5a5.5 5.5 0 110 11 5.5 5.5 0 010-11zm6.5-.75a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z"/></svg></a>
+    </div>
 </header>
 
 <h1>Explore Gallery</h1>
 
 <div class="filter-container">
-
-<button class="filter-btn active" onclick="filterImages('all')">All</button>
-<button class="filter-btn" onclick="filterImages('cars')">Cars</button>
-<button class="filter-btn" onclick="filterImages('nature')">Nature</button>
-<button class="filter-btn" onclick="filterImages('cats')">Cats</button>
-<button class="filter-btn" onclick="filterImages('streets')">Streets</button>
-
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="cars">Cars</button>
+    <button class="filter-btn" data-filter="nature">Nature</button>
+    <button class="filter-btn" data-filter="cats">Cats</button>
+    <button class="filter-btn" data-filter="streets">Streets</button>
 </div>
 
 <div class="gallery" id="gallery"></div>
 
-<div id="modal" class="modal" onclick="this.style.display='none'">
-<img id="modalImg">
-</div>
+<div id="modal" class="modal"><img id="modalImg" src=""></div>
 
 <footer>© 2026 H7 Gallery</footer>
 
 <script>
+    // تأكد من إضافة روابط صورك هنا في هذه القائمة
+    const imagesData = [
+        { category: 'cars', url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70' },
+        { category: 'nature', url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470' },
+        { category: 'cats', url: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131' },
+        { category: 'streets', url: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b' },
+        { category: 'cars', url: 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8' },
+        { category: 'nature', url: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e' }
+    ];
 
-const imagesData=[
+    const gallery = document.getElementById("gallery");
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modalImg");
 
-{category:'cars',url:'https://images.unsplash.com/photo-1503376780353-7e6692767b70'},
-{category:'nature',url:'https://images.unsplash.com/photo-1501785888041-af3ef285b470'},
-{category:'cats',url:'https://images.unsplash.com/photo-1518791841217-8f162f1e1131'},
-{category:'streets',url:'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b'}
+    function renderGallery(filter = 'all') {
+        gallery.innerHTML = ""; // مسح المحتوى القديم
+        
+        // تصفية الصور بناءً على الفئة
+        const filtered = filter === "all" ? imagesData : imagesData.filter(img => img.category === filter);
 
-];
+        // إضافة جميع الصور المصفاة فوراً
+        filtered.forEach((img, index) => {
+            const card = document.createElement("div");
+            card.className = "image-card";
+            card.innerHTML = `
+                <div class="img-container">
+                    <img src="${img.url}?auto=format&fit=crop&w=800&q=80" onclick="openModal('${img.url}')" loading="lazy">
+                </div>
+                <button class="download-btn" onclick="downloadImage('${img.url}', 'H7-${img.category}-${index}')">Download Image</button>
+            `;
+            gallery.appendChild(card);
+        });
+    }
 
-function display(filter='all'){
+    async function downloadImage(src, filename) {
+        try {
+            const response = await fetch(src);
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename + '.jpg';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        } catch (e) {
+            window.open(src, '_blank');
+        }
+    }
 
-const gallery=document.getElementById("gallery");
+    function openModal(src) {
+        modalImg.src = src;
+        modal.style.display = "flex";
+    }
 
-gallery.innerHTML="";
+    modal.onclick = () => modal.style.display = "none";
 
-for(let i=0;i<6;i++){
-const skeleton=document.createElement("div");
-skeleton.className="skeleton";
-gallery.appendChild(skeleton);
-}
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.onclick = (e) => {
+            document.querySelector(".filter-btn.active").classList.remove("active");
+            e.target.classList.add("active");
+            renderGallery(e.target.dataset.filter);
+        };
+    });
 
-setTimeout(()=>{
+    const themeToggle = document.getElementById("themeToggle");
+    themeToggle.onclick = () => {
+        document.body.classList.toggle("light-mode");
+        themeToggle.textContent = document.body.classList.contains("light-mode") ? "☀️" : "🌙";
+    };
 
-gallery.innerHTML="";
-
-const filtered=filter==="all"
-?imagesData
-:imagesData.filter(img=>img.category===filter);
-
-filtered.forEach(img=>{
-
-const card=document.createElement("div");
-
-card.className="image-card";
-
-card.innerHTML=`
-
-<div class="img-container">
-<img src="${img.url}" onclick="openModal('${img.url}')">
-</div>
-
-<a href="${img.url}" download class="download-btn">
-Download
-</a>
-
-`;
-
-gallery.appendChild(card);
-
-});
-
-reveal();
-
-},800);
-
-}
-
-function reveal(){
-
-document.querySelectorAll(".image-card").forEach(card=>{
-
-if(card.getBoundingClientRect().top < window.innerHeight-50){
-card.classList.add("reveal");
-}
-
-});
-
-}
-
-window.addEventListener("scroll",reveal);
-
-function filterImages(cat){
-
-document.querySelectorAll(".filter-btn").forEach(btn=>btn.classList.remove("active"));
-
-event.target.classList.add("active");
-
-display(cat);
-
-}
-
-function openModal(src){
-
-document.getElementById("modalImg").src=src;
-
-document.getElementById("modal").style.display="flex";
-
-}
-
-const toggle=document.getElementById("themeToggle");
-
-toggle.onclick=()=>{
-
-document.body.classList.toggle("light-mode");
-
-if(document.body.classList.contains("light-mode")){
-toggle.textContent="☀️";
-}else{
-toggle.textContent="🌙";
-}
-
-};
-
-display();
-
+    // تشغيل العرض عند فتح الصفحة
+    renderGallery();
 </script>
 
 </body>
