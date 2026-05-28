@@ -1,247 +1,382 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H7 Gallery</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>H7 Gallery</title>
 
-    <style>
-        :root {
-            --bg: #0a0a0a;
-            --text: #ffffff;
-            --card-bg: rgba(255, 255, 255, 0.04);
-            --primary: #ff4757;
-            --border: #222;
-        }
+<style>
+:root{
+    --bg:#f7f7f7;
+    --card:#ffffff;
+    --text:#111111;
+    --primary:#ff3b5c;
+    --border:#e5e5e5;
+}
 
-        .light-mode {
-            --bg: #f5f5f5;
-            --text: #111;
-            --card-bg: #ffffff;
-            --border: #ddd;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            text-align: center;
-            transition: background 0.4s ease;
-        }
+body{
+    font-family:Segoe UI, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
 
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px 5%;
-            position: sticky;
-            top: 0;
-            background: var(--bg);
-            z-index: 1000;
-        }
 
-        .logo { font-size: 32px; font-weight: 900; letter-spacing: 2px; cursor: pointer; }
-        .logo span { color: var(--primary); }
+header{
+    width:100%;
+    padding:20px 5%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:white;
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
 
-        #themeToggle {
-            background: transparent;
-            border: 1.5px solid var(--primary);
-            color: var(--primary);
-            padding: 8px 15px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: 0.3s;
-        }
+.logo{
+    font-size:32px;
+    font-weight:900;
+    letter-spacing:2px;
+}
 
-        .social-links { display: flex; gap: 15px; align-items: center; }
-        .social-links svg { width: 24px; height: 24px; fill: var(--primary); transition: 0.3s; }
-        .social-links svg:hover { transform: scale(1.1); }
+.logo span{
+    color:var(--primary);
+}
 
-        .filter-container { margin: 20px 0; }
+.social-links{
+    display:flex;
+    gap:14px;
+}
 
-        .filter-btn {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 10px 22px;
-            border-radius: 30px;
-            cursor: pointer;
-            margin: 5px;
-            transition: 0.3s;
-        }
+.social-links a{
+    width:42px;
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#f2f2f2;
+    border-radius:14px;
+    transition:0.3s ease;
+}
 
-        .filter-btn.active { background: var(--primary); border-color: var(--primary); color: white; }
+.social-links a:hover{
+    background:var(--primary);
+    transform:translateY(-2px);
+}
 
-        .gallery {
-            column-count: 3;
-            column-gap: 20px;
-            padding: 20px 5%;
-            max-width: 1400px;
-            margin: auto;
-            min-height: 400px;
-        }
+.social-links svg{
+    width:22px;
+    height:22px;
+    fill:var(--primary);
+}
 
-        @media (max-width: 900px) { .gallery { column-count: 2; } }
-        @media (max-width: 600px) { .gallery { column-count: 1; } }
+.social-links a:hover svg{
+    fill:white;
+}
 
-        .image-card {
-            break-inside: avoid;
-            margin-bottom: 20px;
-            background: var(--card-bg);
-            border-radius: 18px;
-            padding: 12px;
-            border: 1px solid var(--border);
-            opacity: 1; 
-            transition: 0.4s;
-        }
+.hero{
+    padding:70px 20px 40px;
+    text-align:center;
+}
 
-        .img-container { overflow: hidden; border-radius: 12px; }
-        .image-card img { width: 100%; height: auto; display: block; cursor: zoom-in; transition: 0.5s; }
-        .image-card:hover img { transform: scale(1.03); }
+.hero h1{
+    font-size:clamp(2.2rem,5vw,4rem);
+    margin-bottom:12px;
+}
 
-        .download-btn {
-            display: block;
-            margin-top: 12px;
-            padding: 10px;
-            background: var(--primary);
-            color: white;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            width: 100%;
-            transition: 0.3s;
-        }
+.hero p{
+    color:#666;
+    max-width:650px;
+    margin:auto;
+    line-height:1.7;
+    font-size:1rem;
+}
 
-        .download-btn:hover { opacity: 0.9; letter-spacing: 1px; }
+.gallery{
+    columns:3 300px;
+    column-gap:20px;
+    padding:20px 5% 70px;
+    max-width:1500px;
+    margin:auto;
+}
 
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            cursor: zoom-out;
-        }
+.image-card{
+    background:var(--card);
+    border-radius:24px;
+    overflow:hidden;
+    margin-bottom:20px;
+    break-inside:avoid;
+    border:1px solid var(--border);
+    box-shadow:0 5px 18px rgba(0,0,0,0.05);
+    transition:0.3s ease;
+}
 
-        .modal img { max-width: 90%; max-height: 85%; border-radius: 8px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+.image-card:hover{
+    transform:translateY(-4px);
+}
 
-        footer { padding: 40px; color: #777; border-top: 1px solid var(--border); margin-top: 20px; }
-    </style>
+.image-card img{
+    width:100%;
+    display:block;
+    cursor:pointer;
+    transition:0.4s ease;
+}
+
+.image-card:hover img{
+    transform:scale(1.03);
+}
+
+.card-content{
+    padding:14px;
+}
+
+.download-btn{
+    width:100%;
+    border:none;
+    background:var(--primary);
+    color:white;
+    padding:12px;
+    border-radius:14px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s ease;
+}
+
+.download-btn:hover{
+    opacity:0.92;
+    letter-spacing:0.5px;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:3000;
+    padding:20px;
+}
+
+.modal img{
+    max-width:95%;
+    max-height:90%;
+    border-radius:18px;
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    border-top:1px solid var(--border);
+    background:white;
+    color:#777;
+}
+
+@media(max-width:768px){
+
+    header{
+        padding:18px;
+    }
+
+    .logo{
+        font-size:26px;
+    }
+
+    .hero{
+        padding-top:50px;
+    }
+
+    .gallery{
+        padding:15px;
+        column-gap:15px;
+    }
+
+    .social-links a{
+        width:38px;
+        height:38px;
+    }
+}
+</style>
 </head>
 
 <body>
 
 <header>
-    <button id="themeToggle" aria-label="Toggle Theme">🌙</button>
-    <div class="logo" onclick="window.location.reload()">H<span>7</span></div>
-    <div class="social-links">
-        <a href="https://instagram.com/h7_ayoub" target="_blank" title="Instagram">
-            <svg viewBox="0 0 24 24"><path d="M7.75 2C4.57 2 2 4.57 2 7.75v8.5C2 19.43 4.57 22 7.75 22h8.5C19.43 22 22 19.43 22 16.25v-8.5C22 4.57 19.43 2 16.25 2h-8.5zm4.25 4.5a5.5 5.5 0 110 11 5.5 5.5 0 010-11zm6.5-.75a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z"/></svg>
-        </a>
-        <a href="https://tiktok.com/@h7_ayoub" target="_blank" title="TikTok">
-            <svg viewBox="0 0 24 24"><path d="M12 2h3a5 5 0 004 4v3a8 8 0 01-4-1.2V15a6 6 0 11-6-6c.34 0 .67.03 1 .08v3a3 3 0 102 2.92V2z"/></svg>
-        </a>
+
+    <div class="logo">
+        H<span>7</span>
     </div>
+
+    <div class="social-links">
+
+        <a href="https://instagram.com/h7_ayoub" target="_blank">
+            <svg viewBox="0 0 24 24">
+                <path d="M7.75 2C4.57 2 2 4.57 2 7.75v8.5C2 19.43 4.57 22 7.75 22h8.5C19.43 22 22 19.43 22 16.25v-8.5C22 4.57 19.43 2 16.25 2h-8.5zm4.25 4.5a5.5 5.5 0 110 11 5.5 5.5 0 010-11zm6.5-.75a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z"/>
+            </svg>
+        </a>
+
+        <a href="https://tiktok.com/@h7_ayoub" target="_blank">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2h3a5 5 0 004 4v3a8 8 0 01-4-1.2V15a6 6 0 11-6-6c.34 0 .67.03 1 .08v3a3 3 0 102 2.92V2z"/>
+            </svg>
+        </a>
+
+    </div>
+
 </header>
 
-<h1>Explore Gallery</h1>
-
-<div class="filter-container">
-    <button class="filter-btn active" data-filter="all">All</button>
-    <button class="filter-btn" data-filter="cars">Cars</button>
-    <button class="filter-btn" data-filter="nature">Nature</button>
-    <button class="filter-btn" data-filter="cats">Cats</button>
-    <button class="filter-btn" data-filter="streets">Streets</button>
-</div>
+<section class="hero">
+    <h1>Salé & Rabat Photo Gallery</h1>
+    <p>
+        Professional responsive gallery for showcasing high quality images
+        with clean design and smooth experience.
+    </p>
+</section>
 
 <div class="gallery" id="gallery"></div>
 
-<div id="modal" class="modal"><img id="modalImg" src=""></div>
+<div class="modal" id="modal">
+    <img id="modalImg" src="">
+</div>
 
-<footer>© 2026 H7 Gallery</footer>
+<footer>
+    © 2026 H7 Gallery
+</footer>
 
 <script>
-    const imagesData = [
-        { category: 'cars', url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70' },
-        { category: 'nature', url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470' },
-        { category: 'cats', url: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131' },
-        { category: 'streets', url: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b' },
-        { category: 'cars', url: 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8' },
-        { category: 'nature', url: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e' }
-    ];
 
-    const gallery = document.getElementById("gallery");
-    const modal = document.getElementById("modal");
-    const modalImg = document.getElementById("modalImg");
+const images = [
 
-    function renderGallery(filter = 'all') {
-        gallery.innerHTML = ""; 
-        const filtered = filter === "all" ? imagesData : imagesData.filter(img => img.category === filter);
+{
+url:"file_00000000afec72469808e497b8fb2614.png"
+},
 
-        filtered.forEach((img, index) => {
-            const card = document.createElement("div");
-            card.className = "image-card";
-            card.innerHTML = `
-                <div class="img-container">
-                    <img src="${img.url}?auto=format&fit=crop&w=800&q=80" onclick="openModal('${img.url}')" loading="lazy">
-                </div>
-                <button class="download-btn" onclick="downloadImage('${img.url}', 'H7-${img.category}-${index}')">Download Image</button>
-            `;
-            gallery.appendChild(card);
-        });
+{
+url:"file_00000000b19472469c83cd2bbd5b1fa2.png"
+},
+
+{
+url:"file_000000002ccc72468ef70359297de14d.png"
+},
+
+{
+url:"file_000000005bb47246b6af89c98e518809.png"
+},
+
+{
+url:"file_0000000052f87246abc5095ca0314a0b.png"
+},
+
+{
+url:"file_0000000082f472468e8de14b33b95951.png"
+},
+
+{
+url:""
+},
+
+{
+url:""
+},
+
+{
+url:""
+},
+
+];
+
+const gallery = document.getElementById("gallery");
+
+images.forEach((img,index)=>{
+
+    const card = document.createElement("div");
+
+    card.className = "image-card";
+
+    card.innerHTML = `
+
+        <img 
+            src="${img.url}?auto=format&fit=crop&w=900&q=80"
+            onclick="openModal('${img.url}?auto=format&fit=crop&w=1600&q=100')"
+            loading="lazy"
+        >
+
+        <div class="card-content">
+
+            <button class="download-btn"
+                onclick="downloadImage('${img.url}','H7-image-${index}')">
+
+                Download Image
+
+            </button>
+
+        </div>
+
+    `;
+
+    gallery.appendChild(card);
+
+});
+
+async function downloadImage(url, filename){
+
+    try{
+
+        const response = await fetch(url);
+
+        const blob = await response.blob();
+
+        const blobUrl = window.URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+
+        a.href = blobUrl;
+
+        a.download = filename + ".jpg";
+
+        document.body.appendChild(a);
+
+        a.click();
+
+        a.remove();
+
+        window.URL.revokeObjectURL(blobUrl);
+
+    }catch(err){
+
+        window.open(url,"_blank");
+
     }
+}
 
-    async function downloadImage(src, filename) {
-        try {
-            const response = await fetch(src);
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename + '.jpg';
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(a);
-        } catch (e) {
-            window.open(src, '_blank');
-        }
-    }
 
-    function openModal(src) {
-        modalImg.src = src;
-        modal.style.display = "flex";
-        document.body.style.overflow = "hidden";
-    }
+const modal = document.getElementById("modal");
+const modalImg = document.getElementById("modalImg");
 
-    modal.onclick = () => {
-        modal.style.display = "none";
-        document.body.style.overflow = "auto";
-    }
+function openModal(src){
 
-    document.querySelectorAll(".filter-btn").forEach(btn => {
-        btn.onclick = (e) => {
-            document.querySelector(".filter-btn.active").classList.remove("active");
-            e.target.classList.add("active");
-            renderGallery(e.target.dataset.filter);
-        };
-    });
+    modal.style.display = "flex";
 
-    const themeToggle = document.getElementById("themeToggle");
-    themeToggle.onclick = () => {
-        document.body.classList.toggle("light-mode");
-        themeToggle.textContent = document.body.classList.contains("light-mode") ? "☀️" : "🌙";
-    };
+    modalImg.src = src;
 
-    renderGallery();
+    document.body.style.overflow = "hidden";
+}
+
+modal.onclick = ()=>{
+
+    modal.style.display = "none";
+
+    document.body.style.overflow = "auto";
+}
+
 </script>
 
 </body>
