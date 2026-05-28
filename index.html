@@ -26,7 +26,6 @@ body{
     color:var(--text);
 }
 
-
 header{
     width:100%;
     padding:20px 5%;
@@ -38,16 +37,35 @@ header{
     position:sticky;
     top:0;
     z-index:1000;
+    gap:20px;
 }
 
 .logo{
     font-size:32px;
     font-weight:900;
     letter-spacing:2px;
+    white-space:nowrap;
 }
 
 .logo span{
     color:var(--primary);
+}
+
+/* IMAGE IN HEADER */
+
+.header-image{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    padding:0 20px;
+}
+
+.header-image img{
+    width:100%;
+    max-width:340px;
+    height:75px;
+    object-fit:cover;
+    border-radius:16px;
 }
 
 .social-links{
@@ -184,6 +202,7 @@ footer{
 
     header{
         padding:18px;
+        gap:10px;
     }
 
     .logo{
@@ -203,6 +222,11 @@ footer{
         width:38px;
         height:38px;
     }
+
+    .header-image img{
+        max-width:160px;
+        height:55px;
+    }
 }
 </style>
 </head>
@@ -213,6 +237,10 @@ footer{
 
     <div class="logo">
         H<span>7</span>
+    </div>
+
+    <div class="header-image">
+        <img src="1779967877969.png" alt="Salé">
     </div>
 
     <div class="social-links">
@@ -297,24 +325,7 @@ url:"file_00000000e3f072469e2590fa725c826a.png"
 
 {
 url:"file_0000000079ec71f49468401a2b41440b.png"
-},
-
-{
-url:""
-},
-
-{
-url:""
-},
-
-{
-url:""
-},
-
-{
-url:""
-},
-
+}
 
 ];
 
@@ -329,9 +340,10 @@ images.forEach((img,index)=>{
     card.innerHTML = `
 
         <img 
-            src="${img.url}?auto=format&fit=crop&w=900&q=80"
-            onclick="openModal('${img.url}?auto=format&fit=crop&w=1600&q=100')"
+            src="${img.url}"
+            onclick="openModal('${img.url}')"
             loading="lazy"
+            decoding="async"
         >
 
         <div class="card-content">
@@ -381,7 +393,6 @@ async function downloadImage(url, filename){
 
     }
 }
-
 
 const modal = document.getElementById("modal");
 const modalImg = document.getElementById("modalImg");
