@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
 <meta charset="UTF-8">
@@ -37,20 +41,14 @@ body{
     left:0;
     z-index:-2;
     background:linear-gradient(-45deg,#000000,#0f172a,#111111,#1e293b);
-    background-size:400% 400%;
-    animation:bgMove 15s ease infinite;
+    background-size:200% 200%;
+    animation:bgMove 25s ease-in-out infinite;
 }
 
 @keyframes bgMove{
-    0%{
-        background-position:0% 50%;
-    }
-    50%{
-        background-position:100% 50%;
-    }
-    100%{
-        background-position:0% 50%;
-    }
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
 }
 
 nav{
@@ -73,14 +71,9 @@ nav{
     letter-spacing:3px;
 }
 
-.logo span{
-    color:#00bfff;
-}
+.logo span{color:#00bfff;}
 
-.nav-links{
-    display:flex;
-    gap:30px;
-}
+.nav-links{display:flex;gap:30px;}
 
 .nav-links a{
     color:white;
@@ -89,9 +82,7 @@ nav{
     transition:0.3s;
 }
 
-.nav-links a:hover{
-    color:#00bfff;
-}
+.nav-links a:hover{color:#00bfff;}
 
 .hero{
     min-height:100vh;
@@ -107,9 +98,7 @@ nav{
     margin-bottom:20px;
 }
 
-.hero-content h1 span{
-    color:#00bfff;
-}
+.hero-content h1 span{color:#00bfff;}
 
 .hero-content p{
     max-width:700px;
@@ -135,21 +124,12 @@ nav{
     transition:0.3s;
 }
 
-.btn1{
-    background:#00bfff;
-}
+.btn1{background:#00bfff;}
+.btn2{border:1px solid rgba(255,255,255,0.2);}
 
-.btn2{
-    border:1px solid rgba(255,255,255,0.2);
-}
+.hero-btns a:hover{transform:translateY(-5px);}
 
-.hero-btns a:hover{
-    transform:translateY(-5px);
-}
-
-section{
-    padding:100px 8%;
-}
+section{padding:100px 8%;}
 
 .section-title{
     text-align:center;
@@ -179,9 +159,7 @@ section{
     transition:0.5s;
 }
 
-.card:hover img{
-    transform:scale(1.08);
-}
+.card:hover img{transform:scale(1.08);}
 
 .overlay{
     position:absolute;
@@ -192,10 +170,7 @@ section{
     background:linear-gradient(to top,rgba(0,0,0,0.9),transparent);
 }
 
-.overlay h3{
-    font-size:24px;
-    margin-bottom:10px;
-}
+.overlay h3{font-size:24px;margin-bottom:10px;}
 
 .download-btn{
     display:inline-block;
@@ -222,15 +197,8 @@ section{
     backdrop-filter:blur(10px);
 }
 
-.about-box h2{
-    margin-bottom:20px;
-    font-size:35px;
-}
-
-.about-box p{
-    color:#cccccc;
-    line-height:1.9;
-}
+.about-box h2{margin-bottom:20px;font-size:35px;}
+.about-box p{color:#cccccc;line-height:1.9;}
 
 .social-links{
     margin-top:30px;
@@ -248,13 +216,9 @@ section{
     transition:0.3s;
 }
 
-.social-links a:hover{
-    background:#00bfff;
-}
+.social-links a:hover{background:#00bfff;}
 
-.license{
-    text-align:center;
-}
+.license{text-align:center;}
 
 .license-box{
     background:rgba(255,255,255,0.04);
@@ -265,10 +229,7 @@ section{
     backdrop-filter:blur(10px);
 }
 
-.license-box p{
-    color:#cccccc;
-    line-height:1.8;
-}
+.license-box p{color:#cccccc;line-height:1.8;}
 
 footer{
     padding:40px;
@@ -296,32 +257,14 @@ footer{
     border-radius:15px;
 }
 
-.lightbox.active{
-    display:flex;
-}
+.lightbox.active{display:flex;}
 
 @media(max-width:768px){
-
-    .hero-content h1{
-        font-size:48px;
-    }
-
-    .hero-content p{
-        font-size:15px;
-    }
-
-    .nav-links{
-        gap:15px;
-    }
-
-    .nav-links a{
-        font-size:13px;
-    }
-
-    .card{
-        height:320px;
-    }
-
+    .hero-content h1{font-size:48px;}
+    .hero-content p{font-size:15px;}
+    .nav-links{gap:15px;}
+    .nav-links a{font-size:13px;}
+    .card{height:320px;}
 }
 
 </style>
@@ -332,10 +275,7 @@ footer{
 <div class="bg"></div>
 
 <nav>
-
-<div class="logo">
-H<span>7</span>
-</div>
+<div class="logo">H<span>7</span></div>
 
 <div class="nav-links">
 <a href="#gallery">Gallery</a>
@@ -343,108 +283,61 @@ H<span>7</span>
 <a href="#license">License</a>
 <a href="#social">Social</a>
 </div>
-
 </nav>
 
 <section class="hero">
-
 <div class="hero-content">
-
 <h1>H<span>7</span></h1>
-
-<p>
-Professional photography portfolio website for sharing cinematic and urban photography in high quality.
-</p>
+<p>Professional photography portfolio website for sharing cinematic and urban photography in high quality.</p>
 
 <div class="hero-btns">
 <a href="#gallery" class="btn1">Explore Photos</a>
 <a href="#about" class="btn2">About Me</a>
 </div>
-
 </div>
-
 </section>
 
 <section id="gallery">
-
 <h2 class="section-title">Photography Gallery</h2>
-
 <div class="gallery" id="gallery-container"></div>
-
 </section>
 
 <section id="about">
-
 <div class="about">
-
 <div class="about-box">
-
 <h2>About Me</h2>
-
-<p>
-I capture moments hidden in streets, cities, seas, buildings, and nature.
-My photography is focused on cinematic urban vibes, quiet landscapes, architecture, night lights, and the beauty of everyday places.
-Through every image, I try to turn simple scenes into visual stories filled with atmosphere and emotion.
-</p>
-
+<p>I capture moments hidden in streets, cities, seas, buildings, and nature.</p>
 </div>
 
 <div class="about-box">
-
 <h2>Why H7?</h2>
-
-<p>
-H7 is designed to showcase modern cinematic photography with a smooth and responsive experience on both mobile and desktop devices.
-The website is optimized for fast loading and professional presentation.
-</p>
-
+<p>H7 is designed for smooth and fast photography showcase experience.</p>
 </div>
-
 </div>
-
 </section>
 
 <section id="license" class="license">
-
 <h2 class="section-title">License & Rights</h2>
-
 <div class="license-box">
-
-<p>
-© 2026 H7 Photography. All photos published on this website belong to H7.
-Users may download images for personal use only. Re-uploading, editing,
-selling, or commercial use without permission is prohibited.
-</p>
-
+<p>© 2026 H7 Photography. Personal use only.</p>
 </div>
-
 </section>
 
 <section id="social">
-
 <h2 class="section-title">Social Media</h2>
 
 <div class="social-links">
-
 <a href="https://instagram.com/h7_ayoub" target="_blank">
-<i class="fa-brands fa-instagram"></i>
-Instagram
+<i class="fa-brands fa-instagram"></i> Instagram
 </a>
 
 <a href="https://tiktok.com/@" target="_blank">
-<i class="fa-brands fa-tiktok"></i>
-TikTok
+<i class="fa-brands fa-tiktok"></i> TikTok
 </a>
-
 </div>
-
 </section>
 
-<footer>
-
-© 2026 H7 — All Rights Reserved.
-
-</footer>
+<footer>© 2026 H7 — All Rights Reserved.</footer>
 
 <div class="lightbox" id="lightbox" onclick="closeImage()">
 <img id="lightbox-img">
@@ -453,78 +346,34 @@ TikTok
 <script>
 
 const myPhotos = [
-    {
-        title: "Tramway",
-        url: "file_00000000a3dc71f487f9bb2edf426ab9.png"
-    },
-    {
-        title: "Mohammed VI Tower",
-        url: "file_00000000afec72469808e497b8fb2614.png"
-    },
-    {
-        title: "Bab EL Mrissa",
-        url: "file_00000000b19472469c83cd2bbd5b1fa2.png"
-    },
-    {
-        title: "Avenue Ennasr",
-        url: "file_00000000c99871f4bb695955cf370d38.png"
-    },
-    {
-        title: "Rabat Lighthouse",
-        url: "file_00000000e3f072469e2590fa725c826a.png"
-    },
-    {
-        title: "Grand Theatre of Rabat",
-        url: "file_0000000082f472468e8de14b33b95951.png"
-    },
-    {
-        title: "Bouregreg River",
-        url: "file_00000000487c7246a5ce0ac5f03ca0c8.png"
-    },
-    {
-        title: "A",
-        url: "file_0000000079ec71f49468401a2b41440b.png"
-    },
-    {
-        title: "Mausoleum of Mohammed V",
-        url: "file_0000000052f87246abc5095ca0314a0b.png"
-    },
-    {
-        title: "Mohammed VI Tower",
-        url: "file_000000005bb47246b6af89c98e518809.png"
-    },
-    {
-        title: "",
-        url: ""
-    },
-    {
-        title: "",
-        url: ""
-    },
-    {
-        title: "",
-        url: ""
-    },
-
+    { title:"Tramway", url:"file_00000000a3dc71f487f9bb2edf426ab9.png" },
+    { title:"Mohammed VI Tower", url:"file_00000000afec72469808e497b8fb2614.png" },
+    { title:"Bab EL Mrissa", url:"file_00000000b19472469c83cd2bbd5b1fa2.png" },
+    { title:"Avenue Ennasr", url:"file_00000000c99871f4bb695955cf370d38.png" },
+    { title:"Rabat Lighthouse", url:"file_00000000e3f072469e2590fa725c826a.png" },
+    { title:"Grand Theatre", url:"file_0000000082f472468e8de14b33b95951.png" },
+    { title:"Bouregreg River", url:"file_00000000487c7246a5ce0ac5f03ca0c8.png" },
+    { title:"Mausoleum", url:"file_0000000052f87246abc5095ca0314a0b.png" },
+    { title:"Mohammed VI Tower 2", url:"file_000000005bb47246b6af89c98e518809.png" }
 ];
 
-function displayGallery() {
-    const container = document.getElementById("gallery-container");
-    container.innerHTML = myPhotos.map(photo => `
+function displayGallery(){
+    const container=document.getElementById("gallery-container");
+
+    container.innerHTML = myPhotos
+        .filter(p => p.url)
+        .map(photo=>`
         <div class="card">
-            <img src="${photo.url}" onclick="openImage(this.src)">
+            <img src="${photo.url}" loading="lazy" decoding="async" onclick="openImage(this.src)">
             <div class="overlay">
                 <h3>${photo.title}</h3>
-                <a class="download-btn" href="${photo.url}" download>
-                    Download
-                </a>
+                <a class="download-btn" href="${photo.url}" download>Download</a>
             </div>
         </div>
     `).join('');
 }
 
 displayGallery();
-
 
 function openImage(src){
     document.getElementById("lightbox").classList.add("active");
