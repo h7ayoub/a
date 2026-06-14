@@ -264,7 +264,28 @@ footer{
     .hero-content p{font-size:15px;}
     .nav-links{gap:15px;}
     .nav-links a{font-size:13px;}
-    .card{height:320px;}
+    
+    /* عرض صورتين بجانب بعض على الهواتف */
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    .card {
+        height: 200px;
+        border-radius: 12px;
+    }
+    .overlay {
+        padding: 12px;
+    }
+    .overlay h3 {
+        font-size: 14px;
+        margin-bottom: 4px;
+    }
+    .download-btn {
+        padding: 6px 12px;
+        font-size: 11px;
+        margin-top: 4px;
+    }
 }
 
 </style>
