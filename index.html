@@ -259,32 +259,42 @@ footer{
 
 .lightbox.active{display:flex;}
 
+/* تعديل الهاتف لإجبار الصور على الظهور صورتين بجانب بعض */
 @media(max-width:768px){
     .hero-content h1{font-size:48px;}
     .hero-content p{font-size:15px;}
-    .nav-links{gap:15px;}
+    .nav-links{gap:12px; flex-wrap: wrap; justify-content: center;}
     .nav-links a{font-size:13px;}
     
-    /* عرض صورتين بجانب بعض على الهواتف */
+    /* هنا تم إجبار المعرض على صورتين بجانب بعض وتقليل المسافة بينهما */
     .gallery {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
     }
+    
+    /* تعديل الارتفاع والخطوط لتتناسب بشكل ممتاز مع الشاشة الصغيرة */
     .card {
-        height: 200px;
-        border-radius: 12px;
+        height: 240px !important;
+        border-radius: 14px;
     }
+    
     .overlay {
         padding: 12px;
     }
+    
     .overlay h3 {
         font-size: 14px;
-        margin-bottom: 4px;
+        margin-bottom: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
+    
     .download-btn {
         padding: 6px 12px;
         font-size: 11px;
-        margin-top: 4px;
+        margin-top: 2px;
+        border-radius: 20px;
     }
 }
 
