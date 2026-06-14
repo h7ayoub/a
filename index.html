@@ -259,22 +259,19 @@ footer{
 
 .lightbox.active{display:flex;}
 
-/* تعديل الهاتف لإجبار الصور على الظهور صورتين بجانب بعض */
 @media(max-width:768px){
     .hero-content h1{font-size:48px;}
     .hero-content p{font-size:15px;}
-    .nav-links{gap:12px; flex-wrap: wrap; justify-content: center;}
+    .nav-links{gap:15px;}
     .nav-links a{font-size:13px;}
     
-    /* هنا تم إجبار المعرض على صورتين بجانب بعض وتقليل المسافة بينهما */
     .gallery {
         grid-template-columns: repeat(2, 1fr) !important;
-        gap: 10px !important;
+        gap: 12px !important;
     }
     
-    /* تعديل الارتفاع والخطوط لتتناسب بشكل ممتاز مع الشاشة الصغيرة */
-    .card {
-        height: 240px !important;
+    .card{
+        height:240px !important;
         border-radius: 14px;
     }
     
@@ -309,7 +306,8 @@ footer{
 <div class="logo">H<span>7</span></div>
 
 <div class="nav-links">
-<a href="#gallery">Gallery</a>
+<a href="#sale">​Salé City</a>
+<a href="#rabat">Rabat City</a>
 <a href="#about">About</a>
 <a href="#license">License</a>
 <a href="#social">Social</a>
@@ -322,15 +320,20 @@ footer{
 <p>Professional photography portfolio website for sharing cinematic and urban photography in high quality.</p>
 
 <div class="hero-btns">
-<a href="#gallery" class="btn1">Explore Photos</a>
+<a href="#sale" class="btn1">Explore Photos</a>
 <a href="#about" class="btn2">About Me</a>
 </div>
 </div>
 </section>
 
-<section id="gallery">
-<h2 class="section-title">Photography Gallery</h2>
-<div class="gallery" id="gallery-container"></div>
+<section id="sale">
+<h2 class="section-title">​Salé City</h2>
+<div class="gallery" id="sale-container"></div>
+</section>
+
+<section id="rabat">
+<h2 class="section-title">Rabat City</h2>
+<div class="gallery" id="rabat-container"></div>
 </section>
 
 <section id="about">
@@ -377,22 +380,27 @@ footer{
 <script>
 
 const myPhotos = [
-    { title:"Tramway", url:"file_00000000a3dc71f487f9bb2edf426ab9.png" },
-    { title:"Mohammed VI Tower", url:"file_00000000afec72469808e497b8fb2614.png" },
-    { title:"Bab EL Mrissa", url:"file_00000000b19472469c83cd2bbd5b1fa2.png" },
-    { title:"Avenue Ennasr", url:"file_00000000c99871f4bb695955cf370d38.png" },
-    { title:"Rabat Lighthouse", url:"file_00000000e3f072469e2590fa725c826a.png" },
-    { title:"Grand Theatre of Rabat", url:"file_0000000082f472468e8de14b33b95951.png" },
-    { title:"Bouregreg River", url:"file_00000000487c7246a5ce0ac5f03ca0c8.png" },
-    { title:"Mausoleum of Mohammed V", url:"file_0000000052f87246abc5095ca0314a0b.png" },
-    { title:"Mohammed VI Tower ", url:"file_000000005bb47246b6af89c98e518809.png" }
+   
+    { title:"Mohammed VI Tower", url:"file_00000000afec72469808e497b8fb2614.png", city:"sale" },
+    { title:"Mohammed VI Tower ", url:"file_000000005bb47246b6af89c98e518809.png", city:"sale" },
+    { title:"Bouregreg River", url:"file_00000000487c7246a5ce0ac5f03ca0c8.png", city:"sale" },
+    { title:"Bab EL Mrissa", url:"file_00000000b19472469c83cd2bbd5b1fa2.png", city:"sale" },
+
+
+    { title:"Tramway", url:"file_00000000a3dc71f487f9bb2edf426ab9.png", city:"rabat" },
+    { title:"Avenue Ennasr", url:"file_00000000c99871f4bb695955cf370d38.png", city:"rabat" },
+    { title:"Rabat Lighthouse", url:"file_00000000e3f072469e2590fa725c826a.png", city:"rabat" },
+    { title:"Grand Theatre of Rabat", url:"file_0000000082f472468e8de14b33b95951.png", city:"rabat" },
+    { title:"Mausoleum of Mohammed V", url:"file_0000000052f87246abc5095ca0314a0b.png", city:"rabat" }
 ];
 
-function displayGallery(){
-    const container=document.getElementById("gallery-container");
+function displayCityGallery(containerId, cityName){
+    const container = document.getElementById(containerId);
+    if(!container) return;
 
-    container.innerHTML = myPhotos
-        .filter(p => p.url)
+    const filteredPhotos = myPhotos.filter(photo => photo.url && photo.city === cityName);
+
+    container.innerHTML = filteredPhotos
         .map(photo=>`
         <div class="card">
             <img src="${photo.url}" loading="lazy" decoding="async" onclick="openImage(this.src)">
@@ -404,7 +412,8 @@ function displayGallery(){
     `).join('');
 }
 
-displayGallery();
+displayCityGallery("sale-container", "sale");  
+displayCityGallery("rabat-container", "rabat"); 
 
 function openImage(src){
     document.getElementById("lightbox").classList.add("active");
